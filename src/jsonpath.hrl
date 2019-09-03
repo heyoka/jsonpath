@@ -1,3 +1,7 @@
+-export_type([path/0]).
+
+-type path() :: binary().
+
 %% Logging
 -define(DEBUG(Format, Args),
     lager:log(debug, self(), "[~p:~p] " ++ Format, [?MODULE, ?LINE | Args])).
