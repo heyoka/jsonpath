@@ -31,6 +31,79 @@ search_array_index_test() ->
 			{<<"onclick">>,<<"OpenDoc()">>}]},
 		jsonpath:search(<<"menu.popup.menuitem[1]">>, ?JSON)).
 
+update_single_node_test() ->
+	?assertEqual({[{<<"menu">>,
+		{[{<<"id">>,<<"file">>},
+			{<<"value">>,<<"File">>},
+			{<<"popup">>,
+				{[{<<"menuitem">>,
+					[{[{<<"value">>,<<"New">>},
+						{<<"onclick">>,<<"CreateNewDoc()">>}]},
+						{[{<<"value">>,<<"Open">>},{<<"onclick">>,<<"OpenDoc()">>}]},
+						{[{<<"value">>,<<"Close">>},
+							{<<"onclick">>,<<"CloseDoc()">>},
+							{<<"ondbclick">>, <<"print()">>}
+						]}]}]}}]}}]},
+		jsonpath:update(<<"menu.popup.menuitem[2].ondbclick">>, <<"print()">>, ?JSON)).
+
+update_node_test() ->
+	?assertEqual({[{<<"menu">>,
+		{[{<<"id">>,<<"file">>},
+			{<<"value">>,<<"File">>},
+			{<<"popup">>,
+				{[{<<"menuitem">>,
+					[{[{<<"value">>,<<"New">>},
+						{<<"onclick">>,<<"CreateNewDoc()">>}]},
+						{[{<<"value">>,<<"Open">>},{<<"onclick">>,<<"OpenDoc()">>}]},
+						{[{<<"value">>,<<"Close">>},
+							{<<"onclick">>,<<"CloseDoc()">>}
+						]}]},
+				{<<"menuitem2">>, {[{<<"value">>,43}]}}]}
+			}]} }
+		]},
+		jsonpath:update(<<"menu.popup.menuitem2">>, {[{<<"value">>, 43}]}, ?JSON)).
+
+%%update_array_index_test() ->
+%%	?assertEqual(
+%%		{[{<<"menu">>,
+%%			{[{<<"id">>,<<"file">>},
+%%				{<<"value">>,<<"File">>},
+%%				{<<"popup">>,
+%%					{[{<<"menuitem">>,
+%%						[{[{<<"value">>,<<"New">>},
+%%							{<<"onclick">>,<<"CreateNewDoc()">>}]},
+%%							{[{<<"value">>,<<"foo">>},
+%%								{<<"onclick">>,<<"OpenDoc()">>}]},
+%%							{[{<<"value">>,<<"Close">>},
+%%								{<<"onclick">>,<<"CloseDoc()">>}]}]}]}}]}}]},
+%%		jsonpath:update(<<"menu.popup.menuitem[1].value">>, <<"foo">>, ?JSON)).
+
+
+delete_single_node_test() ->
+	?assertEqual({[{<<"menu">>,
+		{[{<<"id">>,<<"file">>},
+			{<<"value">>,<<"File">>},
+			{<<"popup">>,
+				{[{<<"menuitem">>,
+					[{[{<<"value">>,<<"New">>},
+						{<<"onclick">>,<<"CreateNewDoc()">>}]},
+						{[{<<"value">>,<<"Open">>}]},
+						{[{<<"value">>,<<"Close">>},
+							{<<"onclick">>,<<"CloseDoc()">>}]}]}]}}]}}]},
+		jsonpath:delete(<<"menu.popup.menuitem[1].onclick">>, ?JSON)).
+
+delete_array_index_test() ->
+	?assertEqual({[{<<"menu">>,
+		{[{<<"id">>,<<"file">>},
+			{<<"value">>,<<"File">>},
+			{<<"popup">>,
+				{[{<<"menuitem">>,
+					[{[{<<"value">>,<<"New">>},
+						{<<"onclick">>,<<"CreateNewDoc()">>}]},
+						{[{<<"value">>,<<"Close">>},
+							{<<"onclick">>,<<"CloseDoc()">>}]}]}]}}]}}]},
+		jsonpath:delete(<<"menu.popup.menuitem[1]">>, ?JSON)).
+
 replace_single_node_test() ->
 	?assertEqual(
 		{[{<<"menu">>,
