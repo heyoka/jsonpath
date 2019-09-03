@@ -318,17 +318,6 @@ delete_tuple_list([SearchHead|SearchTail], [Head|Tail], Accum) ->
 	end.
 
 
-
-
-
-
-
-
-
-
-
-
-
 parse_path(Path) ->
 	Split = binary:split(Path, [<<".">>,<<"[">>,<<"]">>], [global]),
 	lists:filter(fun(X) -> X =/= <<>> end, Split).
